@@ -24,7 +24,7 @@ class SearchesController < ApplicationController
 
   private
   def lookup
-    response = JSON.load(open('https://api.github.com/gists/d2cc9b6151105c0ddd7337a7a2dc1fda/comments?access_token=5190b9373e2f565465b2042c06ef82351b14c6ad'))
+    response = JSON.load(open('https://api.github.com/gists/d2cc9b6151105c0ddd7337a7a2dc1fda/comments'))
 
     response.each do |comment|
       if JSON.parse(comment['body'])['keywords'].split(',').map(&:strip).include? params[:id]
