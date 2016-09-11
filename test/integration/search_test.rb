@@ -13,4 +13,14 @@ class SearchTest < ActionDispatch::IntegrationTest
 
     assert_response :bad_request
   end
+
+  test 'should return search results by search id' do
+    get search_url('soprano')
+
+    search_id = JSON.parse(response.body)['id']
+
+    get search_result(search_id)
+
+    assert_equal(3, JSON.parse(response.body))
+  end
 end
