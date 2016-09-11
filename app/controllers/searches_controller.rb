@@ -1,17 +1,35 @@
 class SearchesController < ApplicationController
-  # GET /searches
+  require 'open-uri'
+
   def index
     render json: {}, status: :bad_request
   end
 
-  # GET /searches/1
-  def show
+  def search
     @search = Search.new(keyword: params[:id])
 
     if @search.save
+
+      lookup
+
       render json: @search, status: :created, location: @search
     else
       render json: @search.errors, status: :unprocessable_entity
+    end
+  end
+
+  def result
+    render json: SearchResult.where(search_id: params[:id])
+  end
+
+  private
+  def lookup
+    response = JSON.load(open('https://api.github.com/gists/d2cc9b6151105c0ddd7337a7a2dc1fda/comments?access_token=5190b9373e2f565465b2042c06ef82351b14c6ad'))
+
+    response.each do |comment|
+      if JSON.parse(comment['body'])['keywords'].split(',').map(&:strip).include? params[:id]
+        SearchResult.create(comment: comment, search_id: @search.id)
+      end
     end
   end
 end
