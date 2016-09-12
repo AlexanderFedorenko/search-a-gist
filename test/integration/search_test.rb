@@ -1,6 +1,18 @@
 require 'test_helper'
 
 class SearchTest < ActionDispatch::IntegrationTest
+  test 'should throw a error when no keyword provided' do
+    assert_raises(ActionController::UrlGenerationError) do
+      assert_recognizes({}, search_url)
+    end
+  end
+
+  test 'should throw a error when wrong keyword provided' do
+    get search_url('@##')
+
+    assert_response :bad_request
+  end
+
   test 'should return new search id when keyword provided' do
     get search_url('soprano')
 

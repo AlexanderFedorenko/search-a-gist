@@ -1,5 +1,7 @@
 class SearchesController < ApplicationController
 
+  before_action :check_params
+
   def search
     @search = Search.new(keyword: params[:keyword])
 
@@ -14,5 +16,12 @@ class SearchesController < ApplicationController
 
   def result
     render json: SearchResult.where(search_id: params[:id])
+  end
+
+  private
+  def check_params
+    unless (params[:keyword] and /[a-zA-Z0-9]/.match(params[:keyword])) or (params[:id] and /\d+/.match(params[:id]))
+      render json: {}, status: :bad_request
+    end
   end
 end
