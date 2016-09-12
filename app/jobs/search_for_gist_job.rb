@@ -8,7 +8,7 @@ class SearchForGistJob < ApplicationJob
     response.each do |comment|
 
       if JSON.parse(comment['body'])['keywords'].split(',').map(&:strip).include? keyword
-        SearchResult.create(comment: comment, search_id: search_id)
+        SearchResult.create(comment: comment.to_json, search_id: search_id)
       end
     end
   end
