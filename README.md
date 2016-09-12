@@ -1,10 +1,10 @@
 # Search-a-gist
 
-API server for searching Github gist comments. No auth required. 100% sequre. Truly anonimous.
+API server for searching Github gist comments. No auth required. 100% secure. Truly anonymous.
 
 ## Prerequisites
 
-App runs on latest Ruby verson 2.3.1 and Rails 5.0
+App runs on latest Ruby version 2.3.1 and Rails 5.0
 
 ## Installation
 
@@ -13,7 +13,6 @@ App runs on latest Ruby verson 2.3.1 and Rails 5.0
 * `bundle install --without production`
 * `rake db:create`
 * `rake db:schema:load`
-* 
 
 ### Run new search
 
@@ -77,4 +76,4 @@ GET http://localhost:3000/gist-search-results/1
 ### Running Tests
 
 At the moment application only integration tests.
-You can help by writing some utin tests.
+You can help by writing some unit tests.
